@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myweb
+  namespace: prodns
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx:1.14
+    resources:
+      requests:
+        cpu: "200m"
+        memory: "500Mi"
+      limits:
+        cpu: "1"
+        memory: "1Gi"
+    env:
+    - name: DB_ID
+      value: "mydb"
+    - name: DB_PASS
+      value: "developer"
