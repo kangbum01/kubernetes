@@ -1,0 +1,42 @@
+# Deployment
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: home-deploy
+  namespace: testns
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      name: home
+  template:
+    metadata:
+      name: home-pod
+      namespace: testns
+      labels:
+        name: home
+    spec:
+      containers:
+      - name: home-containers
+        image: httpd
+        ports:
+        - containerPort: 80
+
+# Service - ClusterIP
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: home-service
+  namespace: testns
+spec:
+  type: ClusterIP
+  selector: # Label 지정
+    name: home
+  ports:
+  - port: 80 # Service의 포트
+    targetPort: 80 # 해당 Label을 가지고 있는 pod에 80포트로 전달 위에 있는 containerPort로 적어야해
+    protocol: TCP
+
+

@@ -1,0 +1,38 @@
+# whatwant/node-web은 이미지는 요청을 받으면 해당 파드(컨테이너)의 호스트명(=Pod name/hostname) 을 돌려주는 단순 Node 웹 서버입니다
+# Deployment
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: pay-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pay
+  template:
+    metadata:
+      name: pay-pod
+      labels:
+        app: pay
+    spec:
+      containers:
+      - name: pay-containers
+        image: whatwant/node-web:2.0
+        ports:
+        - containerPort: 8080
+
+# Service - ClusterIP
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: pay-service
+spec:
+  type: ClusterIP
+  selector: # Label 지정
+    app: pay
+  ports:
+  - port: 80 # Service의 포트
+    targetPort: 8080 # 해당 Label을 가지고 있는 pod에 80포트로 전달 위에 있는 containerPort로 적어야해
+    protocol: TCP

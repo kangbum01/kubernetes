@@ -1,0 +1,32 @@
+# ingress rule 제작
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: homepay-ingress
+  namespace: testns
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: home-service
+            port: 
+              number: 80
+      
+      - path: /pay
+        pathType: Prefix
+        backend:
+          service:
+            name: pay-service
+            port: 
+              number: 80
+
+
+# 실습 시 home.yml, pay.yml 실행 후 실습
+# 할당 IP 확인 kubectl get ing(ingress)
+# 할당 PORT 확인: kubectl get svc(service) -n ingress-nginx
