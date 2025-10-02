@@ -1,0 +1,26 @@
+'''
+Pod를 지정한 Label을 가지고 있는 노드에 연결 실패하는 yml 파일
+사전에 gpu: "true", disk: "ssd" Label을 가지는 노드들을 생성한다.
+
+# kubectl label nodes node1 gpu=true disk=ssd
+
+# kubectl label nodes node2 gpu=true
+
+# kubectl label nodes node3 disk=ssd
+'''
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: wrong-pod-nodeselector
+spec:
+  nodeSelector:
+    gpu: "true"
+    disk: "ssd"
+    mem: "high" # 해당 레이블을 가진 node가 없다.
+  containers:
+  - name: nginx
+    image: nginx:1.14
+    ports:
+    - containerPort: 80
+

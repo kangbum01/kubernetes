@@ -1,0 +1,22 @@
+# Label이 있는 Pod를 생성하는 yml 파일
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: label-pod
+  labels:
+    name: mainui
+    rel: stable
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14
+    ports:
+    - containerPort: 80
+
+# 명령어를 사용하여 Label을 변경
+# kubectl label pod nolabel-pod name=test
+# 덮어쓰기 --overwrite
+# kubectl label pod nolabel-pod name=test2 --overwrite
+# Label 제거
+# kubectl label pod podname labelkey-

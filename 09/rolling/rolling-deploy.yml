@@ -1,0 +1,30 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: rolling-deploy
+  annotations:
+    kubernetes.io/change-cause: version 3.0 # 버전 변경
+spec:
+  selector:
+    matchLabels:
+      app: web
+      version: stable
+  replicas: 3
+  template:
+    metadata:
+      name: rolling-pod
+      labels:
+        app: web
+        version: stable
+    spec:
+      containers:
+      - name: rolling-container
+        image: whatwant/node-web:3.0 # 이미지도 같은 버전으로
+        ports:
+        - containerPort: 8080
+
+
+# 버전 down
+# kubectl rollout history deploy deploy이름
+# kubectl rollout undo deploy deploy이름

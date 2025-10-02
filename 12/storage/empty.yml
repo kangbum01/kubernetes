@@ -1,0 +1,18 @@
+# emptydir 볼륨 유형 실습 yml
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: empty-pod
+spec:
+  containers:
+  - name: web-server
+    image: nginx:1.14
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: html
+      mountPath: /usr/share/nginx/html
+  volumes:
+  - name: html
+    emptyDir: {}

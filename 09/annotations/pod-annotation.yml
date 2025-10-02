@@ -1,0 +1,16 @@
+# 애너테이션에 대한 간단한 설정을 해보는 yml 파일
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod-annotation
+  annotations:
+    builder: "KBS(alvin852@naver.com)"
+    buildDate: "2025-10-01"
+    imageRegistry: "docker.io/library/nginx:1.14"
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14
+    ports:
+    - containerPort: 80

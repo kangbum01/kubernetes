@@ -1,0 +1,15 @@
+# Pod를 지정한 Label을 가지고 있는 노드에 연결하는 yml 파일
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod-nodeselector
+spec:
+  nodeSelector:
+    gpu: "true"
+    disk: "ssd"
+  containers:
+  - name: nginx
+    image: nginx:1.14
+    ports:
+    - containerPort: 80

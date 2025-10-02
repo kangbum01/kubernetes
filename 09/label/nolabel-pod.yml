@@ -1,0 +1,13 @@
+# Label이 없는 Pod를 생성하는 yml 파일
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nolabel-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14
+    ports:
+    - containerPort: 80
+
