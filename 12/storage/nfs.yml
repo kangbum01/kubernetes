@@ -1,0 +1,23 @@
+# NFS 서버 공유 폴더 생성
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: web-nfs
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    ports:
+    - containerPort: 80
+    # 2) 볼륨 마운트 - 마운트할 위치
+    # mount -t nfs 192.168.10.14:/nas/k8s /usr/share/nginx/html
+    volumeMounts:
+    - name: html
+      mountPath: /usr/share/nginx/html
+  # 1) 볼륨 정의 - showmount -e NFS 서버 주소
+  volumes:
+  - name: html
+    nfs:
+      server: 192.168.10.14
+      path: /nas/k8s

@@ -1,0 +1,22 @@
+# pv를 정의하는 yml 파일
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv1
+spec:
+  # 1) 볼륨 특성
+  capacity: # 용량 정의
+    storage: 4Gi
+  volumeMode: Filesystem # 생략 가능default는 Filesystem
+  accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
+  #storageClassName:       써도 되고 안써도 된다
+  persistentVolumeReclaimPolicy: Retain # 반환 정책 Retain, Delete
+  storageClassName: manual # kubectl get storageclass로 확인
+  # 2) 볼륨 정의
+  nfs:
+    server: 192.168.10.14
+    path: /nas/k8s # 공유 폴더 이름 - showmount -e 192.168.10.14로 확인
+

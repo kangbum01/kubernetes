@@ -1,0 +1,23 @@
+# pvc.yml을 바탕으로 작성하는 pod생성 yml
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: web-pvc
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+    # 2) 볼륨 마운트
+    # mount [PVC] /usr/share/nginx/html
+    volumeMounts:
+    - name: html
+      mountPath: /usr/share/nginx/html
+  # 1) 볼륨 정의
+  volumes:
+  - name: html
+    persistentVolumeClaim:
+      claimName: pvc-web   # pvc의 이름으로 지정
+

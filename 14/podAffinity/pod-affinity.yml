@@ -1,0 +1,30 @@
+# affinity중 podAffinity(파드 간의 간격 - 이건 가까운거)을 사용해보는 실습
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: frontend
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: main
+        image: busybox
+        args: 
+        - sleep
+        - 1d
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app: backend
+            topologyKey: kubernetes.io/hostname # 키를 기준으로 호스트 이름이 같은걸 찾는다
+

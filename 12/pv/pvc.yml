@@ -1,0 +1,19 @@
+# pv.yml(nfs 서버에 공유된 자원)을 참고하여 제작한 pvc
+# pvc는 pv의 특성만 확인한다.
+# pvc는 storageClassName에서 가장 좋은 pv를 선택한다.
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-web
+spec:
+  # 볼륨 특성으로 선택
+  resources:
+    requests:
+      storage: 2Gi # 해당 용량 이상을 탐색 pv보다 높으면 Pending 상태로 멈춤
+  accessModes:     # 설정 된 접근 모드
+  - ReadWriteOnce
+  - ReadOnlyMany
+  storageClassName: manual # 해당 이름을 탐색
+  volumeMode: Filesystem # 생략 시 Filesystem으로 설정
+

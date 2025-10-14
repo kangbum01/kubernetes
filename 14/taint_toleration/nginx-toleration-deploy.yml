@@ -1,0 +1,26 @@
+# pod를 4개 생성하는 yml 이걸 통해 toleration 실습을 진행할꺼임
+# 
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: webui
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: webui
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+        app: webui
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:1.27
+      tolerations:
+      - key: "role"
+        operator: "Equal"
+        value: "web"
+        effect: NoSchedule

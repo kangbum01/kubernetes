@@ -1,0 +1,27 @@
+# 4개의 Pod를 만드는 Deployment 이를 이용해서 cordon 실습을 진행함
+# kubectl create deploy mydeploy --image=nginx --replicas=4
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: webui
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: webui
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+        app: webui
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:1.27
+
+# 실습 방법
+# kubectl cordon node2
+# kubectl create deploy mydeploy --image=nginx --replicas=4
+# kubectl uncordon node2
+
